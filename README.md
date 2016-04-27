@@ -53,6 +53,20 @@ rake db:create # create a new database on your machine
 rake db:migrate # instruct your database what tables it needs to contain
 ```
 
+!!!!!!!
+
+@TODO - error
+
+![under construction gif](http://www.textfiles.com/underconstruction/RaRainForest8220construction.gif)
+
+```bash
+rake db:create
+rake aborted!
+Gem::LoadError: You have already activated rake 11.1.2, but your Gemfile requires rake 10.4.2. Prepending `bundle exec` to your command may solve this.
+```
+
+!!!!!!!
+
 > You may see errors if postgres isn't configured/linked correctly on your machine. Flag down an instructor for help. As a last resort, download and then launch Postgres.app. You will see an elephant in your menu if it's running.
 
 Stop and commit! Then run `git diff` to see what changed.
@@ -96,7 +110,7 @@ talks_data = [
 ]
 ```
 
-**Exercises:** 
+**Exercises:**
 * Create 3 new Talks in the Rails Console.
 * Delete the last talk you created
 * Find only the first talk
