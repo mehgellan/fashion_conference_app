@@ -28,11 +28,11 @@ Lab Goals:
 
   ``` bash
   # rails new APP_PATH [options]
-  rails new conference_app -T -d=postgresql
+  rails new conference_app -T -d postgresql
   cd conference_app
   ```
 
-  > We are using the `-T` (aka `--skip-test-unit`) and `-d postgresql` (aka `--database=postgresql`) options today -- postgresl is our preferred database. We'll talk about tests another day.
+  > We are using the `-T` (aka `--skip-test-unit`) and `-d postgresql` (aka `--database postgresql`) options today -- postgresl is our preferred database. We'll talk about tests another day.
 
   Stop and commit!
   ``` bash
