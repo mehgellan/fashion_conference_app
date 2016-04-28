@@ -1,4 +1,4 @@
-# Active Record
+# <img src="https://cloud.githubusercontent.com/assets/7833470/10423298/ea833a68-7079-11e5-84f8-0a925ab96893.png" width="60"> Active Record
 
 <img src="https://media.giphy.com/media/vjmSleUsnXU8o/giphy.gif" width="400" title="The files are in the computer!" alt="Zoolander Screenshot">
 
@@ -107,7 +107,8 @@ Lab Goals:
 
 ## Record Creation and Query Challenges
 
-**Create and query Speaker records**
+
+  **Create and query Speaker records in the Rails console.**
 
   Here's some data to play with:
   ```ruby
@@ -121,58 +122,74 @@ Lab Goals:
 
 * Create 3 new speakers in the Rails Console.
     <details><summary>solution</summary>
+
     ```ruby
     Speaker.create(speakers_data)
     ```
   </details>
 * Delete the last speaker you created.
     <details><summary>solution</summary>
+
     ```ruby
     Speaker.last.destroy
     ```
   </details>
+  
 * Find only the first speaker.
     <details><summary>solution</summary>
+
     ```ruby
     Speaker.first
     ```
   </details>
+  
 * Find only the last two speakers.
     <details><summary>solution</summary>
+
     ```ruby
     Speaker.last 2
     ```
   </details>
+  
 * Find a speaker by id (try id `1`).
     <details><summary>solution</summary>
+
     ```ruby
     Speaker.find_by_id 1
     # or
     Speaker.find_by id: 1
     ```
   </details>
+  
 * Find a speaker by first name.
     <details><summary>solution</summary>
+
     ```ruby
     Speaker.find_by_first_name "Nick"
     # or
     Speaker.find_by(first_name: "Nick")
     ```
   </details>
+  
 * Sort by last name (alphabetically).
     <details><summary>solution</summary>
+
     ```ruby
     Speaker.order(:last_name)
     ```
   </details>
+  
 * Update the email of the last speaker you created.
     <details><summary>solution</summary>
+
     ```ruby
     Speaker.last.update(email: "newemail@example.com")
     ```
   </details>
+  
 * Delete all the speakers you created.
     <details><summary>solution</summary>
+
     ```ruby
     Speaker.destroy_all
     ```
@@ -180,38 +197,20 @@ Lab Goals:
 
 
 **Resources**:
-  * <details>
-    <summary>`ActiveRecord::Base` partial method list (Click here)</summary>
 
-    **Class Methods**
+* ActiveRecord partial method list
 
-    * create
-    * count
-    * all
-    * find
-    * first
-    * last
-    * update
-    * destroy_all
-    * delete_all
-    * ...
+    * Class Methods: `all`,  `create`, `count`, `delete_all`, `destroy_all`, `find`, `first`, `last`, `order`, ...
 
-    **Instance Methods**
+    * Instance Methods:  `delete`, `destroy`,  `save`, `update`, ...
+  
+* [Active Record Basics Rails Guide](http://guides.rubyonrails.org/active_record_basics.html)
+ 
+* [Active Record Query Interface Rails Guide](http://guides.rubyonrails.org/active_record_querying.html)
 
-    * save
-    * update
-    * create_or_update
-    * delete
-    * destroy
-    * ...
-  </details>
+* http://api.rubyonrails.org/classes/ActiveRecord/Base.html
 
-
-  * [Active Record Basics Rails Guide](http://guides.rubyonrails.org/active_record_basics.html)
-  * [Active Record Query Interface Rails Guide](http://guides.rubyonrails.org/active_record_querying.html)
-  * [`ActiveRecord::Base` Full Method Reference](http://api.rubyonrails.org/classes/ActiveRecord/Base.html)
-
-## Seeding data
+## Seeding Data
 
 1. **Take a look at `db/seed.rb`.**
 
@@ -247,7 +246,7 @@ Lab Goals:
 
   Run `rake db:seed` again, and then check all your speakers from inside the Rails console.
 
-1. **Add a line to delete old speakers when you seed.**
+1. **Delete old seed records when you seed.**
 
   Add a line in your seed file to do `Speakers.delete_all` before the new speakers are created.
 
@@ -291,7 +290,46 @@ Lab Goals:
 
   Stop and commit!
 
-##
+## Validations
+
+1. **Add a built-in validator to the `Speaker` model.**
+
+  Rails has built-in validations we can use to validate data before it's saved into the database.
+  
+  Conference organizers want some way to get in touch with speakers.  Add a validation inside the `Speaker` model class to make sure each speaker has an email address:
+  
+  ```ruby
+  # app/models/speaker.rb
+  class Speaker < ActiveRecord::Base
+    validates :email, presence: true
+  end
+  ```
+
+1. **Test the validation in Rails console.**
+
+  Back in your Rails console, try creating a speaker without an email address.  You should see `ROLLBACK` in the Rails console instead of `COMMIT`, meaning there was no change to your database. 
+  
+  Let's use the Rails console to see what happened:
+  
+  ```ruby
+  > s = Speaker.create({})
+     (0.2ms)  BEGIN
+     (0.3ms)  ROLLBACK
+    => #<Speaker id: nil, first: nil, last: nil, email: nil, created_at: nil, updated_at: nil>
+  > s.valid?
+    => false
+  > s.errors.any?
+    => true
+  > s.errors.messages
+    => {:email=>["can't be blank"]}
+  ```
+  
+  Just as expected, our validation didn't pass, and we got an error message. 
+  
+  See the Rails Guide on [Validations](http://guides.rubyonrails.org/active_record_validations.html) for more information on using validations, including how to create custom validations.
+  
+  Stop and commit!
+  
 **Bonus**: Can you create a `Talk` model and seed it?
 
 
