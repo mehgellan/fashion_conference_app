@@ -155,6 +155,8 @@ Lab Goals:
     <details><summary>solution</summary>
 
     ```ruby
+    Speaker.find 1
+    # or 
     Speaker.find_by_id 1
     # or
     Speaker.find_by id: 1
@@ -360,45 +362,133 @@ A Rails model is just a class. We can create instance methods to add behaviors w
 
   Stop and commit!
   
-## Bonus Challenges: `Talk` model
+## Extra Practice & Stretch: `Talk` model
 
-1. Create a `Talk` model with attributes: `topic` (a string), `duration` (an integer), and `start_time` (a `datetime`).
+
+1. Generate a `Talk` model with attributes: `topic` (a string), `duration` (an integer), and `start_time` (a `datetime`).
 
   <details><summary>solution</summary>
   
   ``` bash
-  rails g model talk topic:string duration:integer start_time:datetime
+  rails g model talk topic:string duration:integer start_time:datetime 
   ```
   </details>
 
-2. Can you create a `Talk` model and seed it?
+1. Run `rake db:migrate` to update your schema with this new model, then head over to the Rails console and create a `Talk` instance as a sanity check.
 
-
-  ``` bash
-  rails g model talk topic:string duration:integer start_time:datetime
-  git diff # take a look at the files you just created!
+  <details><summary>solution</summary>
+  
+  ```ruby
+  > Talk.create({ topic: "How to Beard", duration: 60, start_time: DateTime.now })    
+      => #<Talk id: 23, topic: "How to Beard", duration: 0, created_at: "2016-04-29 18:23:14", updated_at: "2016-04-29 18:23:14", start_time: "2016-04-29 18:23:14">
   ```
+  </details>
+
+1. Add a validator to your `Talks` model to require that the `start_time` be present.  Also require that the length of the `topic` string be between 3 and 100 characters.
+
+
+  <details><summary>solution</summary>
+  
+    ```ruby
+    # app/models/talk.rb
+    class Talk
+      validates :start_time, presence: true
+      validates :topic, length: { in: 3..100 }
+    end
+    ```
+    
+    </details>
+    
+
+1. Add code to your seed file to create `Talk`s.  Here's some sample data you could use, or create some with FFaker:
 
   ```ruby
   talks_data = [
-      {:topic=>"A School for Ants?", :duration=>90, :start_time=>DateTime.now-(1.0/24)},
-      {:topic=>"Hansel: He's so hot right now", :duration=>45, :start_time=>Date.now+(23.0/24)},
+      {:topic=>"A Fashion School for Ants?", :duration=>90, :start_time=>DateTime.now-(1.0/24)},
+      {:topic=>"Button-down Bliss", :duration=>45, :start_time=>Date.now+(23.0/24)},
       {:topic=>"Ambi-turning", :duration=>30, :start_time=>Date.now+(2.0/24)},
-      {:topic=>"Orange Mocha Frappuccino", :duration=>30, :start_time=>Date.now+(4.0/24)}
+      {:topic=>"The Joy of Jumpsuits", :duration=>30, :start_time=>Date.now+(4.0/24)}
   ]
   ```
+  
+  <details><summary>solution</summary>
+  
+    ```ruby
+    # db/seeds.rb
+    Talks.destroy_all
+    5.times do
+      talks_data << {  # assume adding to talks_data from above 
+        topic: FFaker::Company.catch_phrase,
+        start_time: FFaker::date
+      }
+    end
+    Talks.create(talks_data)
+    ```
+    
+  </details>
 
 
-  * Select all the speakers with start times in the future
+1. Using `after_initialize` [ActiveRecord Callback](http://guides.rubyonrails.org/active_record_callbacks.html) add default values for a talk's `duration` (e.g., 30) and `topic` (e.g., "TBD").
 
+   
+  <details><summary>Hint: </summary>Create a `add_default_values` instance method to use with `after_initialize`, and be careful not to overwrite a `duration` or `topic` passed in for the instance.</details>
+  
+    
+  <details><summary>solution</summary>
   ```ruby
-  #seed.rb
-  Talk.destroy_all # super dangerous!
-
-  10.times do
-      Talk.create({  # 10 seperate database writes
-          topic: FFaker::Company.catch_phrase,
-          duration: [30,45,60,90].sample,
-      })
+  # app/models/talk.rb
+  class Talk < ActiveRecord::Base
+    # validations
+    after_initialize :set_default_values
+  
+    def set_default_values
+      # set a duration *only if* there isn't one after initialize
+      self.duration ||= 30
+      self.topic ||= "TBD"
+    end
   end
   ```
+  </details>
+  
+
+  
+1. Try a few complex queries: 
+
+* Select all talks with `start_times` in the future.
+    <details><summary>solution</summary>
+
+    ```ruby
+    Talk.where('start_time > ?', DateTime.now)
+    ```
+  </details>
+  
+* Count the number of talks with the default `topic` ("TBD")
+
+  <details><summary>solution</summary>
+
+    ```ruby
+    Talk.where('topic = ?', "TBD").count
+    ```
+  </details>
+    
+* Iterate through all the talks with the default `topic` and `puts` the start time of each. Bonus: format the start time in a more human readable way.
+
+   <details><summary>solution</summary>
+
+    ```ruby
+    Talk.where('topic = ?', "TBD").find_each do |talk|
+      puts talk.start_time
+    end
+    ```
+  </details>
+  
+  <details><summary>bonus solution</summary>
+
+    ```ruby
+    Talk.where('topic = ?', "TBD").find_each do |talk|
+      puts talk.start_time.strftime("%m/%d/%Y, %I:%M%p")
+    end
+    ```
+  </details>
+
+
