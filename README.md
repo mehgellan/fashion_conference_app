@@ -144,7 +144,7 @@ speakers_data = [
 
     * Class Methods: `all`,  `create`, `count`, `delete_all`, `destroy_all`, `find`, `first`, `last`, `order`, ...
 
-    * Instance Methods:  `delete`, `destroy`,  `save`, `update`, ...
+    * Instance Methods:  `delete`, `destroy`,  `save`, `update`, `update_attributes`, ...
 
 * [Active Record Basics Rails Guide](http://guides.rubyonrails.org/active_record_basics.html)
 
@@ -304,3 +304,9 @@ A Rails model is just a class. We can create instance methods to add behaviors w
 
 
 * Iterate through all the talks with the default `topic` and `puts` the start time of each. Bonus: format the start time in a more human readable way.
+
+## Future Development Ideas
+
+1. Add routes, controllers, and views for `Speaker` and `Talk` (more on this full process soon!). 
+
+1. Create an association (relationship) between speakers and talks (we'll talk about how to do this soon!). 
