@@ -1,7 +1,9 @@
 class Speaker < ActiveRecord::Base
 
+  validates :email, presence: true
+
   def speechify(blabber_duration=1)
-    FFaker::HipsterIpsum.paragraph(blabber_duration)
+    FFaker::HipsterIpsum.sentence(blabber_duration)
   end
 
   # overwrite the to_s method

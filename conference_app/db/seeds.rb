@@ -8,18 +8,40 @@
 
 puts "Seeding Database..."
 
-Talk.delete_all
+Speaker.destroy_all
+speakers_data = []
+
+10.times do
+  speakers_data << {
+    first: FFaker::Name.first_name,
+    last: FFaker::Name.last_name,
+    email: FFaker::Internet.safe_email
+  }
+end
+
+speakers = Speaker.create(speakers_data) # array of all created speakers
+puts "Seeded #{speakers.count} speakers"
+
+Talk.destroy_all
 
 talks_data = []
 
 10.times do
   talks_data << {
     topic: FFaker::Company.catch_phrase,
-    duration: [20,30,40,60].sample
+    duration: [30,45,60,90,nil].sample,
+    start_time: FFaker::Time.date
+  }
+end
+
+3.times do
+  talks_data << {
+    topic: nil,
+    duration: [30,45,60,90,nil].sample,
+    start_time: FFaker::Time.date
   }
 end
 
 talks = Talk.create(talks_data)
-# puts talks.map {|t| "#{t.id}, #{t.topic}"}
 
 puts "Seeded #{talks.count} talks"
