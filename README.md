@@ -119,88 +119,97 @@ Lab Goals:
   ]
   ```
 
-* <details><summary>Create 3 new speakers in the Rails Console.</summary>
+* Create 3 new speakers in the Rails Console.
+    <details><summary>solution</summary>
     ```ruby
     Speaker.create(speakers_data)
     ```
   </details>
-* <details><summary>Delete the last speaker you created.</summary>
+* Delete the last speaker you created.
+    <details><summary>solution</summary>
     ```ruby
     Speaker.last.destroy
     ```
   </details>
-* <details><summary>Find only the first speaker.</summary>
+* Find only the first speaker.
+    <details><summary>solution</summary>
     ```ruby
     Speaker.first
     ```
   </details>
-* <details><summary>Find only the last two speakers.</summary>
+* Find only the last two speakers.
+    <details><summary>solution</summary>
     ```ruby
     Speaker.last 2
     ```
   </details>
-* <details><summary>Find a speaker by id (try id `1`).</summary>
+* Find a speaker by id (try id `1`).
+    <details><summary>solution</summary>
     ```ruby
     Speaker.find_by_id 1
     # or
     Speaker.find_by id: 1
     ```
   </details>
-* <details><summary>Find a speaker by first name.</summary>
+* Find a speaker by first name.
+    <details><summary>solution</summary>
     ```ruby
     Speaker.find_by_first_name "Nick"
     # or
     Speaker.find_by(first_name: "Nick")
     ```
   </details>
-* <details><summary>Sort by last name (alphabetically).</summary>
+* Sort by last name (alphabetically).
+    <details><summary>solution</summary>
     ```ruby
     Speaker.order(:last_name)
     ```
   </details>
-* <details><summary>Update the email of the last speaker you created.</summary>
+* Update the email of the last speaker you created.
+    <details><summary>solution</summary>
     ```ruby
     Speaker.last.update(email: "newemail@example.com")
     ```
   </details>
-* <details><summary>Delete all the speakers you created.</summary>
+* Delete all the speakers you created.
+    <details><summary>solution</summary>
     ```ruby
     Speaker.destroy_all
     ```
   </details>
 
 
-  **Resources**:
+**Resources**:
   * <details>
-  <summary>`ActiveRecord::Base` method lists (Click here)</summary>
+    <summary>`ActiveRecord::Base` partial method list (Click here)</summary>
 
-  **Class Methods**
+    **Class Methods**
 
-  * create
-  * count
-  * all
-  * find
-  * first
-  * last
-  * update
-  * destroy_all
-  * delete_all
-  * ...
+    * create
+    * count
+    * all
+    * find
+    * first
+    * last
+    * update
+    * destroy_all
+    * delete_all
+    * ...
 
-  **Instance Methods**
+    **Instance Methods**
 
-  * save
-  * update
-  * create_or_update
-  * delete
-  * destroy
-  * ...
+    * save
+    * update
+    * create_or_update
+    * delete
+    * destroy
+    * ...
   </details>
 
 
-  * [Active Record Basics Rails Guide](http://guides.rubyonrails.org/active_record_basics.html),
+  * [Active Record Basics Rails Guide](http://guides.rubyonrails.org/active_record_basics.html)
   * [Active Record Query Interface Rails Guide](http://guides.rubyonrails.org/active_record_querying.html)
-  * [ActiveRecord::Base Method Reference](http://api.rubyonrails.org/classes/ActiveRecord/Base.html)
+  * [`ActiveRecord::Base` Full Method Reference](http://api.rubyonrails.org/classes/ActiveRecord/Base.html)
 
 ## Seeding data
 
@@ -251,6 +260,8 @@ Lab Goals:
   ```
   </details>
 
+  Stop and commit!
+
 1. **Include the [FFaker](https://github.com/ffaker/ffaker) gem in your project.**
 
   Add the `ffaker` gem to your Gemfile, and then `bundle`.
@@ -278,6 +289,7 @@ Lab Goals:
   ```
   </details>
 
+  Stop and commit!
 
 ##
 **Bonus**: Can you create a `Talk` model and seed it?
