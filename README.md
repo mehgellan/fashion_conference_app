@@ -40,7 +40,7 @@ Lab Goals:
   git commit -m "inital commit, rails application boilerplate"
   ```
 
-  Take a moment to look around at your new app's file structure.  In particular, check out `db/schema.rb`.
+  Take a moment to look around at your new app's file structure.
 
 1. **Generate a `Speaker` model.**
 
