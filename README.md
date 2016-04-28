@@ -329,8 +329,49 @@ Lab Goals:
   See the Rails Guide on [Validations](http://guides.rubyonrails.org/active_record_validations.html) for more information on using validations, including how to create custom validations.
   
   Stop and commit!
+
+## Model Methods
+
+A Rails model is just a class. We can create instance methods to add behaviors we might want to use in other parts of the app.
+
+1. **Add an instance method to the `Speaker` model.**
+
+  Create a simple instance method using `FFaker` to have the speaker do a little speaking:
   
-**Bonus**: Can you create a `Talk` model and seed it?
+  ```ruby
+  # app/models/speaker.rb
+  class Speaker < ActiveRecord::Base
+    validates :email, presence: true
+    def speechify(blabber_duration=1)
+      FFaker::HipsterIpsum.sentence(blabber_duration)
+    end
+  end
+  ```
+
+1. **Use the instance method.**
+
+  In a real Rails app, an instance method might be used in the view.  However, it's a good idea to test it in the Rails console.
+  
+  ```ruby
+  > Speaker.first.speechify 2
+      Speaker Load (0.6ms)  SELECT  "speakers".* FROM "speakers"  ORDER BY "speakers"."id" ASC LIMIT 1
+    => "American apparel fab trust fund fixie farm-to-table. Blog mixtape retro +1 organic."
+  ```
+
+  Stop and commit!
+  
+## Bonus Challenges: `Talk` model
+
+1. Create a `Talk` model with attributes: `topic` (a string), `duration` (an integer), and `start_time` (a `datetime`).
+
+  <details><summary>solution</summary>
+  
+  ``` bash
+  rails g model talk topic:string duration:integer start_time:datetime
+  ```
+  </details>
+
+2. Can you create a `Talk` model and seed it?
 
 
   ``` bash
