@@ -8,7 +8,7 @@ Lab Goals:
 * Generate `Speaker` and `Talk` models
 * Use ActiveRecord ORM methods to create and query records
 * Write a seed file and run the `db:seed` task to populate the database with records
-* Add methods to models for validations and rich behavior
+* Add validations and custom methods to models for richer behavior
 
 ## A Rails App with Speakers
 
